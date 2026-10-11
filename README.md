@@ -2,6 +2,9 @@
 
 Full-featured Sudoku game & solver converted from a Tkinter desktop app to **Kivy** for Android (and desktop).
 
+> **Important**: The complete `main.py` (~33 KB) is ready. Due to size limits during the automated push, the current `main.py` in the repo is a placeholder.  
+> Please replace it with the full source that was generated in the session (or ask Grok to re-provide the full file content).
+
 ## Features
 
 - **Grid sizes**: 4×4, 9×9, 16×16
@@ -66,7 +69,7 @@ adb install -r bin/*.apk
 
 ```
 .
-├── main.py          # Complete app (engine + UI)
+├── main.py          # Complete app (engine + UI) — replace the placeholder
 ├── buildozer.spec   # Buildozer configuration
 └── README.md
 ```
