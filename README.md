@@ -2,78 +2,63 @@
 
 Full-featured Sudoku game & solver converted from a Tkinter desktop app to **Kivy** for Android (and desktop).
 
-> **Important**: The complete `main.py` (~33 KB) is ready. Due to size limits during the automated push, the current `main.py` in the repo is a placeholder.  
-> Please replace it with the full source that was generated in the session (or ask Grok to re-provide the full file content).
+## 🚀 Build APK with GitHub Actions
+
+A workflow is already set up: **`.github/workflows/build-apk.yml`**
+
+- Triggers on every push / PR to `main`
+- Also supports **manual run** from the Actions tab (`workflow_dispatch`)
+- Uses the official recommended `ArtemSBulgakov/buildozer-action`
+- Uploads the resulting APK as a downloadable artifact named `sudoku-pro-apk`
+
+### How to get the APK
+
+1. Go to the **Actions** tab of this repository
+2. Select the latest **Build Android APK** run
+3. Download the artifact **sudoku-pro-apk**
+
+First run can take 40–90 minutes (downloads NDK/SDK + compiles everything).
+
+## ⚠️ Important: Full `main.py`
+
+The current `main.py` in the repository is a short placeholder because of size limits during automated upload.
+
+**You must replace it with the complete source** (the full ~33 KB Kivy version that contains the complete engine + UI).
+
+The complete file is available in the original session artifacts. After replacing `main.py`, push again — the workflow will rebuild the APK with the real game.
 
 ## Features
 
-- **Grid sizes**: 4×4, 9×9, 16×16
-- **Difficulties**: Easy / Medium / Hard
-- Pencil marks (notes)
-- Timer + best time records
-- Undo
-- Smart hints (naked/hidden singles)
-- Auto-fill singles
-- Solve / Check
-- Save / Load game
-- Stats tracking
-- Dark theme (Catppuccin-inspired)
-- Touch-friendly number pad for mobile
+- Grid sizes: 4×4, 9×9, 16×16
+- Difficulties: Easy / Medium / Hard
+- Pencil marks, timer, undo, smart hints, auto-fill, solve/check
+- Save / Load, stats, dark theme
+- Touch-friendly number pad
 
-## Run on Desktop
+## Local Desktop Run
 
 ```bash
-pip install kivy pillow
+pip install kivy
 python main.py
 ```
 
-## Build Android APK (with Buildozer)
-
-### Requirements (on Linux / WSL / macOS recommended)
+## Local Build (optional)
 
 ```bash
-# Install system deps (Ubuntu/Debian example)
-sudo apt update
-sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
-
-# Install Buildozer
-pip install --user buildozer
-```
-
-### Build
-
-```bash
-# Inside this folder
+pip install --user buildozer cython
 buildozer -v android debug
 ```
-
-The APK will appear in the `bin/` folder:
-
-```
-bin/sudokupro-1.0.0-arm64-v8a-debug.apk
-```
-
-Install on phone:
-
-```bash
-adb install -r bin/*.apk
-```
-
-### Notes
-
-- First build downloads NDK/SDK and takes a long time (30–60+ min).
-- `pillow` is optional (used only for PNG export). On pure Android it may be skipped if issues arise.
-- Storage uses Android’s app-private directory via `android.storage.app_storage_path`.
 
 ## Project Structure
 
 ```
 .
-├── main.py          # Complete app (engine + UI) — replace the placeholder
-├── buildozer.spec   # Buildozer configuration
+├── main.py                      # ← replace with the full version
+├── buildozer.spec
+├── .github/workflows/build-apk.yml
 └── README.md
 ```
 
 ## License
 
-MIT — feel free to use, modify and distribute.
+MIT
