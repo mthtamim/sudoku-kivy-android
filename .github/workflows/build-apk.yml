@@ -1,0 +1,39 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:   # allows manual trigger from GitHub UI
+
+jobs:
+  build-android:
+    name: Build Sudoku Pro APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          command: buildozer -v android debug
+          buildozer_version: master
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sudoku-pro-apk
+          path: ${{ steps.buildozer.outputs.filename }}
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: List bin directory (debug)
+        if: always()
+        run: |
+          ls -la bin/ || true
+          find . -name "*.apk" -ls || true
